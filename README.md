@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/icon.png" width="128" alt="MideaBar 图标">
+  <img src="website/assets/icon.png" width="128" alt="MideaBar 图标">
 </p>
 
 <h1 align="center">MideaBar</h1>
@@ -10,6 +10,12 @@
   <img src="https://img.shields.io/badge/macOS-14%2B-black.svg" alt="macOS 14+">
   <img src="https://img.shields.io/badge/Swift-5.10-orange.svg" alt="Swift 5.10">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT"></a>
+</p>
+
+<p align="center"><a href="https://binaryify.github.io/MideaBar/">官网</a> · <a href="website/assets/demo.mp4">演示视频</a> · <a href="docs/agent-protocol.md">通信协议</a></p>
+
+<p align="center">
+  <a href="website/assets/demo.mp4"><img src="website/assets/poster.jpg" width="480" alt="MideaBar 演示：点开菜单栏面板、开机、降温到 24℃、打开节能"></a>
 </p>
 
 > ⚠️ **免责声明**
@@ -89,7 +95,8 @@ MideaBar/
 │   └── Models.swift        # 模式 / 风速 / 扫风等枚举
 ├── Icon/make-icon.swift    # 图标源码
 ├── Resources/              # Info.plist、AppIcon.icns
-└── docs/                   # 通信协议与图标
+├── docs/agent-protocol.md  # App 与后台程序的通信协议
+└── website/                # 官网（GitHub Pages），含演示视频与图标
 ```
 
 ## 许可证
