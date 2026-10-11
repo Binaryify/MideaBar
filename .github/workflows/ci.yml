@@ -1,0 +1,22 @@
+# 每次推送到 main 和每个 PR：在 macOS 上编译并打包，确认能构建通过。
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["website/**", "**.md"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 版本号取自 git describe
+      - name: 打包 App
+        run: make app
+      - name: 检查产物
+        run: |
+          lipo -archs build/MideaBar.app/Contents/MacOS/MideaBar
+          codesign --verify --deep build/MideaBar.app

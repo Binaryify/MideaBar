@@ -6,7 +6,10 @@ MideaBar 本身不实现蓝牙协议。它启动一个后台程序 `midea-ac-age
 
 ## 进程约定
 
-- MideaBar 启动时运行 agent：优先使用 App 包内的 `Contents/MacOS/midea-ac-agent`，开发调试时也可用环境变量 `MIDEA_AGENT` 指定路径。
+- MideaBar 启动时按以下顺序查找 agent，用第一个找到的：
+  1. App 包内的 `Contents/MacOS/midea-ac-agent`
+  2. 环境变量 `MIDEA_AGENT` 指定的路径（开发调试用）
+  3. `~/.local/bin/midea-ac-agent`、`/opt/homebrew/bin/midea-ac-agent`、`/usr/local/bin/midea-ac-agent`
 - agent 的 **stdout 只能输出协议消息**。日志、进度提示等一律写到 stderr，MideaBar 会忽略 stderr。
 - MideaBar 退出时关闭 agent 的 stdin。agent 读到 EOF 后应断开蓝牙并退出。
 - agent 意外退出时，MideaBar 会在 2 秒后重启它并重新连接。

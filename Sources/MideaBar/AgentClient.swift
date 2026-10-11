@@ -33,7 +33,10 @@ final class AgentClient {
     private var stdin: FileHandle?
     private var buffer = Data()
 
-    /// 查找 agent：优先 App 包内 Contents/MacOS，其次环境变量 MIDEA_AGENT（开发调试用）。
+    /// App 包外的常见安装位置（从 Finder 启动的 App 拿不到 shell 的 PATH，只能列出固定目录）。
+    private static let installDirs = ["~/.local/bin", "/opt/homebrew/bin", "/usr/local/bin"]
+
+    /// 查找 agent：App 包内 Contents/MacOS → 环境变量 MIDEA_AGENT → 常见安装位置。
     private static func agentURL() -> URL? {
         if let url = Bundle.main.url(forAuxiliaryExecutable: "midea-ac-agent") {
             return url
@@ -41,13 +44,15 @@ final class AgentClient {
         if let path = ProcessInfo.processInfo.environment["MIDEA_AGENT"] {
             return URL(fileURLWithPath: path)
         }
-        return nil
+        return installDirs
+            .map { URL(fileURLWithPath: ($0 as NSString).expandingTildeInPath).appendingPathComponent("midea-ac-agent") }
+            .first { FileManager.default.isExecutableFile(atPath: $0.path) }
     }
 
     func start() throws {
         guard let url = Self.agentURL() else {
             throw NSError(domain: "MideaBar", code: 1,
-                          userInfo: [NSLocalizedDescriptionKey: "找不到 midea-ac-agent"])
+                          userInfo: [NSLocalizedDescriptionKey: "找不到 midea-ac-agent，请放到 ~/.local/bin"])
         }
         let p = Process()
         p.executableURL = url

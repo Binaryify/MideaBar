@@ -7,6 +7,8 @@
 <p align="center">在 macOS 菜单栏里直接用蓝牙控制美的 / 华凌空调——不经手机 App，不经云端。</p>
 
 <p align="center">
+  <a href="https://github.com/Binaryify/MideaBar/actions/workflows/ci.yml"><img src="https://github.com/Binaryify/MideaBar/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/Binaryify/MideaBar/releases"><img src="https://img.shields.io/github/v/release/Binaryify/MideaBar" alt="Release"></a>
   <img src="https://img.shields.io/badge/macOS-14%2B-black.svg" alt="macOS 14+">
   <img src="https://img.shields.io/badge/Swift-5.10-orange.svg" alt="Swift 5.10">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT"></a>
@@ -47,21 +49,34 @@ MideaBar 只负责界面，不包含蓝牙协议实现。蓝牙部分由后台�
 
 参考实现：[midea-ble-go](https://github.com/midea-ble/midea-ble-go) 的 `cmd/midea-ac-agent`。
 
-## 构建
+## 安装
 
-需要 macOS 14+、Xcode 命令行工具，以及一个编译好的 `midea-ac-agent`。
+1. 从 [Releases](https://github.com/Binaryify/MideaBar/releases) 下载 `MideaBar-*.zip`，解压后把 `MideaBar.app` 拖进「应用程序」。支持 macOS 14+，Apple 芯片与 Intel 通用。
+2. 准备后台程序 `midea-ac-agent`，放到 `~/.local/bin/midea-ac-agent`（查找顺序见 [通信协议](docs/agent-protocol.md#进程约定)）。
+3. App 未经 Apple 公证，首次打开前执行一次：
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/MideaBar.app
+   ```
+
+## 从源码构建
+
+需要 macOS 14+ 和 Xcode 命令行工具。
 
 ```bash
 git clone https://github.com/binaryify/MideaBar.git
 cd MideaBar
-make app AGENT=/path/to/midea-ac-agent
+make app                                   # 不含后台程序，运行时去包外查找
+make app AGENT=/path/to/midea-ac-agent     # 把后台程序一起打进 App
 ```
 
-产物在 `build/MideaBar.app`，拖进「应用程序」即可。也可以直接打包并启动：
+产物在 `build/MideaBar.app`。也可以直接打包并启动：
 
 ```bash
 make run AGENT=/path/to/midea-ac-agent
 ```
+
+`make dist` 会再打成发布用的 zip。推送 `v*` 标签（如 `v0.1.0`）时，GitHub Actions 会自动构建并发布到 Releases。
 
 首次启动时 macOS 会请求蓝牙权限，请允许。**请通过 Finder 或 `open` 启动 App**：直接在终端里运行 App 内的可执行文件，蓝牙权限会归到终端名下。
 

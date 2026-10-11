@@ -1,0 +1,28 @@
+# 推送 v* 标签（如 v0.1.0）时：打出通用二进制的 MideaBar.app，压成 zip 发布到 GitHub Releases。
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 打包
+        run: make dist
+      - name: 发布
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" "build/MideaBar-${TAG#v}.zip" \
+            --title "MideaBar $TAG" \
+            --generate-notes \
+            --notes-file .github/release-notes.md
