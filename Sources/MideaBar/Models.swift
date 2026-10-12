@@ -1,10 +1,7 @@
+import MideaProtocol
 import SwiftUI
 
-/// 运行模式；rawValue 即 agent 协议里的名称。
-enum ACMode: String, CaseIterable, Identifiable {
-    case auto, cool, dry, heat, fan
-    var id: String { rawValue }
-
+extension ACMode {
     var label: String {
         switch self {
         case .auto: String(localized: "自动")
@@ -36,11 +33,7 @@ enum ACMode: String, CaseIterable, Identifiable {
     }
 }
 
-/// 风速；rawValue 即 agent 协议里的名称。
-enum FanSpeed: String, CaseIterable, Identifiable {
-    case auto, low, mid, high, full
-    var id: String { rawValue }
-
+extension FanSpeed {
     var label: String {
         switch self {
         case .auto: String(localized: "自动")
@@ -79,12 +72,11 @@ enum Airflow: CaseIterable, Identifiable {
     }
 }
 
-/// 设备连接状态（对应 agent 的 link 事件）。
+/// 设备连接状态。
 enum LinkState: Equatable {
     case starting, connecting, connected, syncing
     case failed(String)
 
-    /// failed 的 msg 来自 agent，原样展示，不做翻译。
     var label: String {
         switch self {
         case .starting: String(localized: "启动中…")

@@ -19,6 +19,7 @@
 "除湿" = "Dry";
 "制热" = "Heat";
 "送风" = "Fan";
+"智能除湿" = "Smart Dry";
 
 /* 风速 */
 "低风" = "Low";
@@ -38,9 +39,21 @@
 "已连接" = "Connected";
 "同步中…" = "Syncing…";
 "设备报告故障" = "Device reported a fault";
-"未知错误" = "Unknown error";
-"后台进程已退出，正在重启…" = "Agent exited, restarting…";
-"找不到 midea-ac-agent，请放到 ~/.local/bin" = "midea-ac-agent not found. Put it in ~/.local/bin";
+"附近没有发现美的空调" = "No Midea AC found nearby";
+"连接超时" = "Connection timed out";
+"连接失败" = "Connection failed";
+"连接失败：%@" = "Connection failed: %@";
+"连接已断开" = "Disconnected";
+"握手超时" = "Handshake timed out";
+"握手失败：密钥校验未通过" = "Handshake failed: key check rejected";
+"设备公钥无效" = "Invalid device public key";
+"空调没有响应" = "The AC is not responding";
+"订阅设备通知失败" = "Failed to subscribe to device notifications";
+"设备不支持该协议（未找到 FFA0 服务）" = "Unsupported device (FFA0 service not found)";
+"设备不支持该协议（未找到 FFA1/FFA2 特征）" = "Unsupported device (FFA1/FFA2 characteristics not found)";
+"蓝牙已关闭" = "Bluetooth is off";
+"没有蓝牙权限，请在「系统设置 › 隐私与安全性 › 蓝牙」中允许 MideaBar" = "No Bluetooth permission. Allow MideaBar in System Settings › Privacy & Security › Bluetooth";
+"这台 Mac 不支持低功耗蓝牙" = "This Mac doesn't support Bluetooth Low Energy";
 
 /* 设置菜单 */
 "设备 SN：%@" = "Device SN: %@";

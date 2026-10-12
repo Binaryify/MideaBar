@@ -1,4 +1,5 @@
 import AppKit
+import MideaProtocol
 import SwiftUI
 
 enum Theme {
@@ -92,15 +93,15 @@ struct ControlPanel: View {
     private var tiles: some View {
         HStack(spacing: 8) {
             Menu {
-                ForEach(ACMode.allCases) { m in
+                ForEach(ACMode.allCases, id: \.self) { m in
                     Button { store.setMode(m) } label: { Label(m.label, systemImage: m.symbol) }
                 }
             } label: {
                 OptionTile(symbol: store.mode?.symbol ?? "questionmark",
-                           title: "模式", value: store.mode?.label ?? store.modeName)
+                           title: "模式", value: store.modeLabel)
             }
             Menu {
-                ForEach(FanSpeed.allCases) { f in
+                ForEach(FanSpeed.allCases, id: \.self) { f in
                     Button(f.label) { store.setFan(f) }
                 }
             } label: {
@@ -146,7 +147,7 @@ struct ControlPanel: View {
                 if !store.sn.isEmpty { Text("设备 SN：\(store.sn)") }
                 Button("重新连接", action: store.reconnect)
                 Toggle("按键提示音", isOn: Binding(get: { store.beep }, set: { store.beep = $0 }))
-                Picker("语言", selection: Binding(get: { AppLanguage.current }, set: AppLanguage.apply)) {
+                Picker("语言", selection: Binding(get: { AppLanguage.current }, set: { AppLanguage.apply($0) })) {
                     ForEach(AppLanguage.allCases) { Text(verbatim: $0.label).tag($0) }
                 }
                 Divider()

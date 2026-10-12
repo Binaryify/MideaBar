@@ -34,7 +34,7 @@ struct MenuBarLabel: View {
     }
 }
 
-/// 退出时关闭 agent（它会断开蓝牙后退出）。
+/// 退出时断开蓝牙连接。
 final class AppDelegate: NSObject, NSApplicationDelegate {
     var store: ACStore?
     func applicationWillTerminate(_ notification: Notification) { store?.shutdown() }

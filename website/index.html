@@ -795,11 +795,10 @@
         <div class="wrap">
           <div class="sec-head reveal">
             <span class="sec-no" data-i18n="how.no">03 — 原理</span>
-            <h2 data-i18n="how.h2">界面和蓝牙，各管各的。</h2>
+            <h2 data-i18n="how.h2">不经云端，App 直接和空调说话。</h2>
             <p class="sec-sub" data-i18n="how.sub">
-              MideaBar 只负责界面。蓝牙连接交给后台程序 <code>midea-ac-agent</code>，两者通过一行一条的 JSON 对话。按
-              <a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.md" style="color: var(--cool)">通信协议</a>
-              实现一个后台，就能换掉它。
+              MideaBar 从空调的蓝牙广播里读出序列号和 MAC，推出根密钥；再用 ECDH 握手协商会话密钥，之后收发加密的美的家电帧。全部在 App 里完成，不需要任何额外程序。详见
+              <a href="https://github.com/binaryify/MideaBar/blob/main/docs/protocol.md" style="color: var(--cool)">蓝牙协议</a>。
             </p>
           </div>
           <div class="flow reveal">
@@ -808,11 +807,11 @@
               <h3>MideaBar</h3>
               <p data-i18n="node1.p">菜单栏图标与控制面板，乐观更新，失败自动回滚。</p>
             </div>
-            <div class="wire"><span>stdin / stdout</span></div>
+            <div class="wire"><span>CoreBluetooth</span></div>
             <div class="node">
-              <div class="k">GO</div>
-              <h3>midea-ac-agent</h3>
-              <p data-i18n="node2.p">握手、加解密、重连，持有一条蓝牙长连接。</p>
+              <div class="k">SWIFT</div>
+              <h3>MideaProtocol</h3>
+              <p data-i18n="node2.p">ECDH 握手、AES-CCM 加解密、家电帧编解码，带单元测试。</p>
             </div>
             <div class="wire"><span>BLE</span></div>
             <div class="node">
@@ -822,13 +821,13 @@
             </div>
           </div>
           <div class="json reveal">
-            <pre><span class="c"># App → agent</span>
-{<span class="s">"op"</span>:<span class="s">"temp"</span>, <span class="s">"temp"</span>:<span class="n">24</span>}
-{<span class="s">"op"</span>:<span class="s">"eco"</span>, <span class="s">"on"</span>:<span class="n">true</span>}</pre>
-            <pre><span class="c"># agent → App</span>
-{<span class="s">"type"</span>:<span class="s">"link"</span>, <span class="s">"state"</span>:<span class="s">"connected"</span>}
-{<span class="s">"type"</span>:<span class="s">"status"</span>, <span class="s">"power"</span>:<span class="n">true</span>,
- <span class="s">"mode"</span>:<span class="s">"cool"</span>, <span class="s">"temp"</span>:<span class="n">24</span>, …}</pre>
+            <pre><span class="c"># rootKey = HKDF(advertisData)</span>
+<span class="s">c1</span> → openId
+<span class="s">c2</span> ← peerKey <span class="c">(P-256)</span>
+<span class="s">c3</span> → myKey ‖ seal(advertisData)</pre>
+            <pre><span class="c"># sessionKey = SHA-256(ECDH)[:16]</span>
+→ <span class="n">AA 24 AC</span> … <span class="s">40</span> …  <span class="c">set 24℃</span>
+← <span class="n">AA 22 AC</span> … <span class="s">C0</span> …  <span class="c">status</span></pre>
           </div>
         </div>
       </section>
@@ -837,30 +836,24 @@
         <div class="wrap">
           <div class="sec-head reveal">
             <span class="sec-no" data-i18n="install.no">04 — 安装</span>
-            <h2 data-i18n="install.h2">三步，从源码构建。</h2>
+            <h2 data-i18n="install.h2">下载、打开、允许蓝牙。</h2>
             <p class="sec-sub" data-i18n="install.sub">
-              需要 macOS 14 及以上和 Xcode 命令行工具。也可以直接从
-              <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a>
-              下载打包好的 App，再把 <code>midea-ac-agent</code> 放到 <code>~/.local/bin</code>。
+              需要 macOS 14 及以上，Apple 芯片与 Intel 通用。也可以用 Xcode 从源码构建：<code>make run</code>。
             </p>
           </div>
           <div class="steps">
             <div class="step reveal">
               <div>
-                <h3 data-i18n="s1.h">获取源码</h3>
-                <div class="code">
-                  <pre>git clone https://github.com/binaryify/MideaBar.git
-cd MideaBar</pre>
-                  <button class="copy" type="button" data-i18n="copy">复制</button>
-                </div>
+                <h3 data-i18n="s1.h">下载 App</h3>
+                <p data-i18n="s1.p">从 <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a> 下载 <code>MideaBar-*.zip</code>，解压后把 <code>MideaBar.app</code> 拖进「应用程序」。</p>
               </div>
             </div>
             <div class="step reveal">
               <div>
-                <h3 data-i18n="s2.h">打包并启动</h3>
-                <p data-i18n="s2.p">把后台程序的路径传给 <code>AGENT</code>，它会被放进 App 包里。</p>
+                <h3 data-i18n="s2.h">解除系统拦截</h3>
+                <p data-i18n="s2.p">App 未经 Apple 公证，首次打开前在终端执行一次：</p>
                 <div class="code">
-                  <pre>make run AGENT=/path/to/midea-ac-agent</pre>
+                  <pre>xattr -dr com.apple.quarantine /Applications/MideaBar.app</pre>
                   <button class="copy" type="button" data-i18n="copy">复制</button>
                 </div>
               </div>
@@ -868,7 +861,7 @@ cd MideaBar</pre>
             <div class="step reveal">
               <div>
                 <h3 data-i18n="s3.h">允许蓝牙权限</h3>
-                <p data-i18n="s3.p">首次启动时 macOS 会请求蓝牙权限，点允许。之后把 <code>build/MideaBar.app</code> 拖进「应用程序」，通过 Finder 打开即可。</p>
+                <p data-i18n="s3.p">打开 MideaBar，按提示允许蓝牙。它会自动找到附近的空调并连接，之后优先连这一台。</p>
               </div>
             </div>
           </div>
@@ -881,7 +874,7 @@ cd MideaBar</pre>
         </div>
         <footer>
           <span>MideaBar · MIT License · © 2026 binaryify</span>
-          <span data-i18n="footer.links"><a href="https://github.com/binaryify/MideaBar">GitHub</a>　·　<a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.md">通信协议</a></span>
+          <span data-i18n="footer.links"><a href="https://github.com/binaryify/MideaBar">GitHub</a>　·　<a href="https://github.com/binaryify/MideaBar/blob/main/docs/protocol.md">蓝牙协议</a></span>
         </footer>
       </div>
     </main>
@@ -992,22 +985,23 @@ cd MideaBar</pre>
         "f6.h": "Local only",
         "f6.p": "Point-to-point Bluetooth. No account, no data uploaded, works offline.",
         "how.no": "03 — How it works",
-        "how.h2": "UI and Bluetooth, kept apart.",
-        "how.sub": 'MideaBar only draws the UI. The Bluetooth connection is handled by a background program, <code>midea-ac-agent</code>, and the two talk in JSON, one message per line. Implement a backend that follows the <a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.en.md" style="color: var(--cool)">protocol</a> and you can swap it in.',
+        "how.h2": "No cloud — the app talks to the AC directly.",
+        "how.sub": 'MideaBar reads the serial number and MAC from the AC\'s Bluetooth advertisement and derives a root key, negotiates a session key with an ECDH handshake, then exchanges encrypted Midea appliance frames. It all happens inside the app — no extra programs. See the <a href="https://github.com/binaryify/MideaBar/blob/main/docs/protocol.en.md" style="color: var(--cool)">Bluetooth protocol</a>.',
         "node1.p": "Menu bar icon and control panel, with optimistic updates and automatic rollback on failure.",
-        "node2.p": "Handshake, encryption and reconnection, holding one long-lived Bluetooth connection.",
+        "node2.p": "ECDH handshake, AES-CCM encryption and appliance frame encoding, with unit tests.",
         "node3.h": "Your AC",
         "node3.p": "Midea / Hualing split air conditioners with Bluetooth.",
         "install.no": "04 — Install",
-        "install.h2": "Build from source in three steps.",
-        "install.sub": 'Requires macOS 14+ and the Xcode Command Line Tools. You can also download the prebuilt app from <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a> and put <code>midea-ac-agent</code> in <code>~/.local/bin</code>.',
-        "s1.h": "Get the source",
-        "s2.h": "Build and launch",
-        "s2.p": "Pass the agent's path as <code>AGENT</code> and it gets bundled into the app.",
+        "install.h2": "Download, open, allow Bluetooth.",
+        "install.sub": "Requires macOS 14+; universal for Apple silicon and Intel. You can also build from source with Xcode: <code>make run</code>.",
+        "s1.h": "Download the app",
+        "s1.p": 'Download <code>MideaBar-*.zip</code> from <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a>, unzip it and drag <code>MideaBar.app</code> into Applications.',
+        "s2.h": "Get past Gatekeeper",
+        "s2.p": "The app isn't notarized by Apple. Before opening it for the first time, run this once in Terminal:",
         "s3.h": "Allow Bluetooth",
-        "s3.p": "On first launch macOS asks for Bluetooth permission — click Allow. Then drag <code>build/MideaBar.app</code> into Applications and open it from Finder.",
+        "s3.p": "Open MideaBar and allow Bluetooth when prompted. It finds the nearby AC, connects, and prefers that unit from then on.",
         disclaimer: "<strong>Disclaimer</strong>&emsp;This is a personal open-source project, not affiliated with or authorized by Midea Group or its sub-brands. “Midea”, “Hualing” and related names and trademarks belong to their respective owners. The Bluetooth protocol comes from public research into device behavior and is provided for learning and for use with your own devices only; you use this project at your own risk.",
-        "footer.links": '<a href="https://github.com/binaryify/MideaBar">GitHub</a>&emsp;·&emsp;<a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.en.md">Protocol</a>',
+        "footer.links": '<a href="https://github.com/binaryify/MideaBar">GitHub</a>&emsp;·&emsp;<a href="https://github.com/binaryify/MideaBar/blob/main/docs/protocol.en.md">Bluetooth protocol</a>',
         copy: "Copy",
         copied: "Copied",
         copyFailed: "Copy failed",
