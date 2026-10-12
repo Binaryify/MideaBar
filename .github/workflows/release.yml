@@ -1,4 +1,4 @@
-# 推送 v* 标签（如 v0.1.0）时：打出通用二进制的 MideaBar.app，压成 zip 发布到 GitHub Releases。
+# 推送 v* 标签（如 v0.1.0）时：打出通用二进制的 MideaBar.app，压成 zip 发布到 GitHub Releases（重推标签则替换附件）。
 name: Release
 
 on:
@@ -21,8 +21,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
+        # 标签重新推送时 Release 已存在：只替换附件，不改说明
         run: |
-          gh release create "$TAG" "build/MideaBar-${TAG#v}.zip" \
-            --title "MideaBar $TAG" \
-            --generate-notes \
-            --notes-file .github/release-notes.md
+          ZIP="build/MideaBar-${TAG#v}.zip"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+          else
+            gh release create "$TAG" "$ZIP" \
+              --title "MideaBar $TAG" \
+              --generate-notes \
+              --notes-file .github/release-notes.md
+          fi
