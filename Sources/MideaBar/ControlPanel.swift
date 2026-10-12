@@ -64,7 +64,7 @@ struct ControlPanel: View {
                     .monospacedDigit()
                     .contentTransition(.numericText(value: store.temp))
                     .animation(.snappy, value: store.temp)
-                Text("°C")
+                Text(verbatim: "°C")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(Theme.secondary)
             }
@@ -107,7 +107,7 @@ struct ControlPanel: View {
                 OptionTile(symbol: "fan", title: "风速", value: store.fanLabel)
             }
             Button(action: store.toggleStrong) {
-                OptionTile(symbol: "bolt", title: "强劲", value: store.strong ? "开" : "关",
+                OptionTile(symbol: "bolt", title: "强劲", value: store.strong ? String(localized: "开") : String(localized: "关"),
                            trailing: .dot(store.strong))
             }
             Menu {
@@ -138,7 +138,7 @@ struct ControlPanel: View {
                 }
             }
             .frame(width: 14)
-            Text(store.fault && store.link == .connected ? "设备报告故障" : store.link.label)
+            Text(store.fault && store.link == .connected ? String(localized: "设备报告故障") : store.link.label)
                 .lineLimit(1)
                 .truncationMode(.tail)
             Spacer()
@@ -146,6 +146,9 @@ struct ControlPanel: View {
                 if !store.sn.isEmpty { Text("设备 SN：\(store.sn)") }
                 Button("重新连接", action: store.reconnect)
                 Toggle("按键提示音", isOn: Binding(get: { store.beep }, set: { store.beep = $0 }))
+                Picker("语言", selection: Binding(get: { AppLanguage.current }, set: AppLanguage.apply)) {
+                    ForEach(AppLanguage.allCases) { Text(verbatim: $0.label).tag($0) }
+                }
                 Divider()
                 Button("退出 MideaBar") { NSApp.terminate(nil) }
             } label: {
@@ -201,7 +204,7 @@ struct OptionTile: View {
     enum Trailing { case chevron, dot(Bool) }
 
     let symbol: String
-    let title: String
+    let title: LocalizedStringKey
     let value: String
     var trailing: Trailing = .chevron
 
@@ -250,9 +253,9 @@ struct TempSlider: View {
                 stepButton("plus", delta: TempRange.step)
             }
             HStack {
-                Text("\(Int(TempRange.min))°")
+                Text(verbatim: "\(Int(TempRange.min))°")
                 Spacer()
-                Text("\(Int(TempRange.max))°")
+                Text(verbatim: "\(Int(TempRange.max))°")
             }
             .font(.system(size: 10))
             .foregroundStyle(Theme.secondary)

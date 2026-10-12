@@ -33,6 +33,7 @@ app: build ## 打包 build/MideaBar.app（可选 AGENT=/path/to/midea-ac-agent �
 	cp "$$(swift build -c release $(ARCHS) --show-bin-path)/MideaBar" $(APP)/Contents/MacOS/MideaBar
 	@if [ -n "$(AGENT)" ]; then cp "$(AGENT)" $(APP)/Contents/MacOS/midea-ac-agent; fi
 	cp Resources/AppIcon.icns $(APP)/Contents/Resources/AppIcon.icns
+	cp -R Resources/*.lproj $(APP)/Contents/Resources/
 	sed 's/__VERSION__/$(VERSION)/g' Resources/Info.plist > $(APP)/Contents/Info.plist
 	codesign --force --deep --sign - $(APP)
 	@echo "✓ 生成 App: $(APP)（版本 $(VERSION)$(if $(AGENT),，含 agent,，不含 agent)）"

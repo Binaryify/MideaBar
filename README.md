@@ -14,6 +14,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT"></a>
 </p>
 
+<p align="center">简体中文 · <a href="README.en.md">English</a></p>
+
 <p align="center"><a href="https://binaryify.github.io/MideaBar/">官网</a> · <a href="website/assets/demo.mp4">演示视频</a> · <a href="docs/agent-protocol.md">通信协议</a></p>
 
 <p align="center">
@@ -32,6 +34,7 @@
 - 显示室内 / 室外温度；开机时空调插画会出风
 - 操作即时生效（乐观更新），失败时自动回到设备的真实状态
 - 后台断开后自动重启并重新连接
+- 界面支持简体中文 / English，默认跟随系统，也可手动切换
 
 ## 工作原理
 
@@ -89,6 +92,12 @@ swift build
 MIDEA_AGENT=/path/to/midea-ac-agent .build/debug/MideaBar
 ```
 
+### 界面语言
+
+界面默认跟随系统语言，目前支持简体中文与英文；也可以在面板右下角的设置菜单 →「语言」里手动切换（App 会自动重启）。代码里直接写中文（`Text("室内")`、`String(localized: "制冷")`），中文即翻译键；英文译文在 [Resources/en.lproj/Localizable.strings](Resources/en.lproj/Localizable.strings)。新增语言：添加 `Resources/<语言>.lproj/`，在 `Info.plist` 的 `CFBundleLocalizations` 里登记，并在 `AppLanguage` 里加一项。
+
+文档同样中英各一份（`README.md` / `README.en.md`、`docs/agent-protocol.md` / `docs/agent-protocol.en.md`），修改时请同步两边。官网的英文文案在 `website/index.html` 末尾脚本的 `EN` 对象里。
+
 ### 修改图标
 
 图标由 [Icon/make-icon.swift](Icon/make-icon.swift) 用 SwiftUI 代码绘制，修改后重新生成：
@@ -107,11 +116,12 @@ MideaBar/
 │   ├── ACUnitView.swift    # 空调插画与出风动画
 │   ├── ACStore.swift       # 状态管理：事件 → 界面状态，用户操作 → 命令
 │   ├── AgentClient.swift   # 后台进程的启动、收发与重启
+│   ├── AppLanguage.swift   # 界面语言：跟随系统 / 手动切换
 │   └── Models.swift        # 模式 / 风速 / 扫风等枚举
 ├── Icon/make-icon.swift    # 图标源码
-├── Resources/              # Info.plist、AppIcon.icns
-├── docs/agent-protocol.md  # App 与后台程序的通信协议
-└── website/                # 官网（GitHub Pages），含演示视频与图标
+├── Resources/              # Info.plist、AppIcon.icns、*.lproj（界面翻译）
+├── docs/agent-protocol.md  # App 与后台程序的通信协议（另有 .en.md 英文版）
+└── website/                # 官网（GitHub Pages，中英双语），含演示视频与图标
 ```
 
 ## 许可证

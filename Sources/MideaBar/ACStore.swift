@@ -43,7 +43,7 @@ final class ACStore {
         beep = UserDefaults.standard.object(forKey: "beep") as? Bool ?? true
         agent.onEvent = { [weak self] in self?.handle($0) }
         agent.onExit = { [weak self] in
-            self?.link = .failed("后台进程已退出，正在重启…")
+            self?.link = .failed(String(localized: "后台进程已退出，正在重启…"))
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { self?.launch() }
         }
         launch()
@@ -130,7 +130,7 @@ final class ACStore {
                 if tempSent { tempPending = false }
             case "syncing": link = .syncing
             default:
-                link = .failed(e.message ?? "未知错误")
+                link = .failed(e.message ?? String(localized: "未知错误"))
                 tempPending = false
             }
         case "status":

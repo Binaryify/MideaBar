@@ -7,11 +7,11 @@ enum ACMode: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .auto: "自动"
-        case .cool: "制冷"
-        case .dry: "除湿"
-        case .heat: "制热"
-        case .fan: "送风"
+        case .auto: String(localized: "自动")
+        case .cool: String(localized: "制冷")
+        case .dry: String(localized: "除湿")
+        case .heat: String(localized: "制热")
+        case .fan: String(localized: "送风")
         }
     }
 
@@ -43,11 +43,11 @@ enum FanSpeed: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .auto: "自动"
-        case .low: "低风"
-        case .mid: "中风"
-        case .high: "高风"
-        case .full: "强风"
+        case .auto: String(localized: "自动")
+        case .low: String(localized: "低风")
+        case .mid: String(localized: "中风")
+        case .high: String(localized: "高风")
+        case .full: String(localized: "强风")
         }
     }
 }
@@ -71,10 +71,10 @@ enum Airflow: CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .fixed: "固定"
-        case .vertical: "上下"
-        case .horizontal: "左右"
-        case .both: "全向"
+        case .fixed: String(localized: "固定")
+        case .vertical: String(localized: "上下")
+        case .horizontal: String(localized: "左右")
+        case .both: String(localized: "全向")
         }
     }
 }
@@ -84,12 +84,13 @@ enum LinkState: Equatable {
     case starting, connecting, connected, syncing
     case failed(String)
 
+    /// failed 的 msg 来自 agent，原样展示，不做翻译。
     var label: String {
         switch self {
-        case .starting: "启动中…"
-        case .connecting: "连接中…"
-        case .connected: "已连接"
-        case .syncing: "同步中…"
+        case .starting: String(localized: "启动中…")
+        case .connecting: String(localized: "连接中…")
+        case .connected: String(localized: "已连接")
+        case .syncing: String(localized: "同步中…")
         case .failed(let msg): msg
         }
     }

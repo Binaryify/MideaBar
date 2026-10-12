@@ -52,7 +52,7 @@ final class AgentClient {
     func start() throws {
         guard let url = Self.agentURL() else {
             throw NSError(domain: "MideaBar", code: 1,
-                          userInfo: [NSLocalizedDescriptionKey: "找不到 midea-ac-agent，请放到 ~/.local/bin"])
+                          userInfo: [NSLocalizedDescriptionKey: String(localized: "找不到 midea-ac-agent，请放到 ~/.local/bin")])
         }
         let p = Process()
         p.executableURL = url

@@ -1,5 +1,7 @@
 # Agent 通信协议
 
+简体中文 · [English](agent-protocol.en.md)
+
 MideaBar 本身不实现蓝牙协议。它启动一个后台程序 `midea-ac-agent`，由后台程序持有和空调的蓝牙长连接，两者通过 **stdin / stdout 收发 JSON，一行一条消息**（JSON Lines）。
 
 任何实现了本协议的程序都能作为 MideaBar 的后台。参考实现见 [midea-ble-go](https://github.com/midea-ble/midea-ble-go) 的 `cmd/midea-ac-agent`。
@@ -47,6 +49,8 @@ MideaBar 本身不实现蓝牙协议。它启动一个后台程序 `midea-ac-age
 | `error` | 出错，`message` 为可直接展示给用户的说明 |
 
 命令失败时，agent 发出 `error` 之后应再推送一次设备的真实状态，MideaBar 会据此撤销界面上的乐观更新。
+
+`message` 会原样显示，MideaBar 不做翻译，用什么语言由 agent 决定。
 
 ### 设备状态 `status`
 

@@ -8,4 +8,16 @@
    ```
 4. 打开 MideaBar，按提示允许蓝牙权限。
 
-支持 macOS 14 及以上，Apple 芯片与 Intel 通用。
+支持 macOS 14 及以上，Apple 芯片与 Intel 通用。界面支持简体中文与英文。
+
+## Installation
+
+1. Download `MideaBar-*.zip` below, unzip it and drag `MideaBar.app` into Applications.
+2. Get the background program `midea-ac-agent` (see the [agent protocol](https://github.com/Binaryify/MideaBar/blob/main/docs/agent-protocol.en.md)) and put it at `~/.local/bin/midea-ac-agent`.
+3. The app is not notarized by Apple. Before opening it for the first time, run in Terminal:
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/MideaBar.app
+   ```
+4. Open MideaBar and allow Bluetooth access when prompted.
+
+Requires macOS 14 or later; universal binary for Apple silicon and Intel. UI available in Simplified Chinese and English.

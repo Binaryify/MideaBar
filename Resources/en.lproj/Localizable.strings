@@ -1,0 +1,51 @@
+/* 英文翻译。键为代码里的中文原文，中文界面直接使用键本身。 */
+
+/* 顶栏 */
+"室内" = "Indoor";
+"室外 %@°C" = "Outdoor %@°C";
+"节能模式" = "Eco";
+
+/* 功能卡片（卡片很窄，译文尽量短） */
+"模式" = "Mode";
+"风速" = "Fan";
+"强劲" = "Turbo";
+"扫风" = "Swing";
+"开" = "On";
+"关" = "Off";
+
+/* 运行模式 */
+"自动" = "Auto";
+"制冷" = "Cool";
+"除湿" = "Dry";
+"制热" = "Heat";
+"送风" = "Fan";
+
+/* 风速 */
+"低风" = "Low";
+"中风" = "Med";
+"高风" = "High";
+"强风" = "Max";
+
+/* 扫风 */
+"固定" = "Fixed";
+"上下" = "Vert.";
+"左右" = "Horiz.";
+"全向" = "All";
+
+/* 连接状态 */
+"启动中…" = "Starting…";
+"连接中…" = "Connecting…";
+"已连接" = "Connected";
+"同步中…" = "Syncing…";
+"设备报告故障" = "Device reported a fault";
+"未知错误" = "Unknown error";
+"后台进程已退出，正在重启…" = "Agent exited, restarting…";
+"找不到 midea-ac-agent，请放到 ~/.local/bin" = "midea-ac-agent not found. Put it in ~/.local/bin";
+
+/* 设置菜单 */
+"设备 SN：%@" = "Device SN: %@";
+"重新连接" = "Reconnect";
+"按键提示音" = "Beep on Command";
+"语言" = "Language";
+"跟随系统" = "System Default";
+"退出 MideaBar" = "Quit MideaBar";

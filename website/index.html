@@ -116,6 +116,22 @@
         border: 1px solid var(--line);
         transition: border-color 0.2s, background 0.2s;
       }
+      .lang {
+        margin-right: 10px;
+        padding: 5px 10px;
+        border-radius: 7px;
+        border: 1px solid var(--line);
+        background: none;
+        color: var(--muted);
+        font: 12px var(--mono);
+        white-space: nowrap;
+        cursor: pointer;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .lang:hover {
+        color: var(--text);
+        border-color: rgba(204, 187, 158, 0.5);
+      }
       .gh:hover {
         border-color: rgba(204, 187, 158, 0.5);
         background: rgba(204, 187, 158, 0.06);
@@ -679,12 +695,13 @@
     <nav>
       <a class="brand" href="#top"><img src="assets/favicon.png" alt="" />MideaBar</a>
       <div class="links">
-        <a href="#demo">演示</a>
-        <a href="#features">功能</a>
-        <a href="#how">原理</a>
-        <a href="#install">安装</a>
+        <a href="#demo" data-i18n="nav.demo">演示</a>
+        <a href="#features" data-i18n="nav.features">功能</a>
+        <a href="#how" data-i18n="nav.how">原理</a>
+        <a href="#install" data-i18n="nav.install">安装</a>
       </div>
       <span class="spacer"></span>
+      <button class="lang" id="lang" type="button" aria-label="切换语言 / Switch language">EN</button>
       <a class="gh" href="https://github.com/binaryify/MideaBar">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
         GitHub
@@ -694,17 +711,17 @@
     <main id="top">
       <div class="wrap hero">
         <div>
-          <p class="eyebrow load d1"><i></i>macOS 菜单栏 · 蓝牙直连 · 开源</p>
-          <h1 class="load d2">把空调，<br /><em>放进菜单栏。</em></h1>
-          <p class="lede load d3">
+          <p class="eyebrow load d1" data-i18n="eyebrow"><i></i>macOS 菜单栏 · 蓝牙直连 · 开源</p>
+          <h1 class="load d2" data-i18n="h1">把空调，<br /><em>放进菜单栏。</em></h1>
+          <p class="lede load d3" data-i18n="lede">
             MideaBar 在 Mac 上直接用蓝牙控制美的 / 华凌空调。不用掏手机，不经过云端，点一下菜单栏就能开机、调温、切模式。
           </p>
           <div class="cta load d4">
             <a class="btn primary" href="https://github.com/binaryify/MideaBar">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
-              在 GitHub 获取
+              <span data-i18n="cta.gh">在 GitHub 获取</span>
             </a>
-            <a class="btn ghost" href="#demo">看 9 秒演示 ↓</a>
+            <a class="btn ghost" href="#demo" data-i18n="cta.demo">看 9 秒演示 ↓</a>
           </div>
         </div>
 
@@ -718,16 +735,16 @@
       <section id="demo">
         <div class="wrap">
           <div class="sec-head reveal">
-            <span class="sec-no">01 — 演示</span>
-            <h2>点开、开机、降温。</h2>
-            <p class="sec-sub">面板的样子、温度的变化，都和真机运行时一致：菜单栏里的温度会跟着同步。</p>
+            <span class="sec-no" data-i18n="demo.no">01 — 演示</span>
+            <h2 data-i18n="demo.h2">点开、开机、降温。</h2>
+            <p class="sec-sub" data-i18n="demo.sub">面板的样子、温度的变化，都和真机运行时一致：菜单栏里的温度会跟着同步。</p>
           </div>
           <div class="window reveal">
             <div class="bar"><i></i><i></i><i></i><span>MideaBar</span></div>
             <video id="demo-video" src="assets/demo.mp4" poster="assets/poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
             <button class="sound" id="sound" type="button">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h3l4-3v10l-4-3H2z" /><path class="wave" d="M11.5 5.5a3.5 3.5 0 0 1 0 5M13.5 3.5a6.5 6.5 0 0 1 0 9" /></svg>
-              <span>打开声音</span>
+              <span data-i18n="sound.on">打开声音</span>
             </button>
           </div>
         </div>
@@ -736,39 +753,39 @@
       <section id="features">
         <div class="wrap">
           <div class="sec-head reveal">
-            <span class="sec-no">02 — 功能</span>
-            <h2>手机 App 里常用的，都在这儿。</h2>
+            <span class="sec-no" data-i18n="features.no">02 — 功能</span>
+            <h2 data-i18n="features.h2">手机 App 里常用的，都在这儿。</h2>
           </div>
           <div class="features reveal">
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M7.5 1.5v6" /><path d="M4.2 3.6a5.2 5.2 0 1 0 6.6 0" /></svg>
-              <h3>一键开关机</h3>
-              <p>菜单栏显示当前设定温度，点开面板，电源键就在右上角。</p>
+              <h3 data-i18n="f1.h">一键开关机</h3>
+              <p data-i18n="f1.p">菜单栏显示当前设定温度，点开面板，电源键就在右上角。</p>
             </div>
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 10 15" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 9.4V2.5a2 2 0 0 1 4 0v6.9a3.4 3.4 0 1 1-4 0z" /><circle cx="5" cy="11.6" r="1.3" fill="currentColor" /></svg>
-              <h3>精确调温</h3>
-              <p>16–30℃，每档 0.5°。拖动滑块松手后才下发，不会连发一串命令。</p>
+              <h3 data-i18n="f2.h">精确调温</h3>
+              <p data-i18n="f2.p">16–30℃，每档 0.5°。拖动滑块松手后才下发，不会连发一串命令。</p>
             </div>
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path d="M7.5 1v13M1.9 4.25l11.2 6.5M1.9 10.75l11.2-6.5" /><path d="M5.8 1.9l1.7 1.5 1.7-1.5M5.8 13.1l1.7-1.5 1.7 1.5" /></svg>
-              <h3>模式与风速</h3>
-              <p>自动、制冷、除湿、制热、送风；风速五档，外加上下 / 左右扫风。</p>
+              <h3 data-i18n="f3.h">模式与风速</h3>
+              <p data-i18n="f3.p">自动、制冷、除湿、制热、送风；风速五档，外加上下 / 左右扫风。</p>
             </div>
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M2 12.5C2 6 6 2 14.5 1.5 14.5 9 11 12.5 6 12.5c-1.6 0-3-.6-4-1.2z" /><path d="M2 12.5c2.5-3.5 5-5.4 8-6.8" /></svg>
-              <h3>节能与强劲</h3>
-              <p>一个开关切节能，一个卡片开强劲，状态实时回读。</p>
+              <h3 data-i18n="f4.h">节能与强劲</h3>
+              <p data-i18n="f4.p">一个开关切节能，一个卡片开强劲，状态实时回读。</p>
             </div>
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 16 13" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M1 4h9.5a2 2 0 1 0-2-2M1 7.5h12.5a2 2 0 1 1-2 2M1 11h6" /></svg>
-              <h3>室内外温度</h3>
-              <p>面板顶部直接显示空调传感器读到的室内、室外温度。</p>
+              <h3 data-i18n="f5.h">室内外温度</h3>
+              <p data-i18n="f5.p">面板顶部直接显示空调传感器读到的室内、室外温度。</p>
             </div>
             <div class="feature">
               <svg width="26" height="26" viewBox="0 0 11 13" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><path d="M5.5 1L1 2.8v3.6c0 2.9 1.9 4.8 4.5 5.6 2.6-.8 4.5-2.7 4.5-5.6V2.8z" /><path d="M3.4 6.4l1.5 1.5 2.8-3" stroke-linecap="round" /></svg>
-              <h3>本地直连</h3>
-              <p>蓝牙点对点通信，不登录账号、不上传数据，断网也能用。</p>
+              <h3 data-i18n="f6.h">本地直连</h3>
+              <p data-i18n="f6.p">蓝牙点对点通信，不登录账号、不上传数据，断网也能用。</p>
             </div>
           </div>
         </div>
@@ -777,9 +794,9 @@
       <section id="how">
         <div class="wrap">
           <div class="sec-head reveal">
-            <span class="sec-no">03 — 原理</span>
-            <h2>界面和蓝牙，各管各的。</h2>
-            <p class="sec-sub">
+            <span class="sec-no" data-i18n="how.no">03 — 原理</span>
+            <h2 data-i18n="how.h2">界面和蓝牙，各管各的。</h2>
+            <p class="sec-sub" data-i18n="how.sub">
               MideaBar 只负责界面。蓝牙连接交给后台程序 <code>midea-ac-agent</code>，两者通过一行一条的 JSON 对话。按
               <a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.md" style="color: var(--cool)">通信协议</a>
               实现一个后台，就能换掉它。
@@ -789,19 +806,19 @@
             <div class="node">
               <div class="k">SWIFTUI</div>
               <h3>MideaBar</h3>
-              <p>菜单栏图标与控制面板，乐观更新，失败自动回滚。</p>
+              <p data-i18n="node1.p">菜单栏图标与控制面板，乐观更新，失败自动回滚。</p>
             </div>
             <div class="wire"><span>stdin / stdout</span></div>
             <div class="node">
               <div class="k">GO</div>
               <h3>midea-ac-agent</h3>
-              <p>握手、加解密、重连，持有一条蓝牙长连接。</p>
+              <p data-i18n="node2.p">握手、加解密、重连，持有一条蓝牙长连接。</p>
             </div>
             <div class="wire"><span>BLE</span></div>
             <div class="node">
               <div class="k">DEVICE</div>
-              <h3>你的空调</h3>
-              <p>美的 / 华凌带蓝牙的分体式空调。</p>
+              <h3 data-i18n="node3.h">你的空调</h3>
+              <p data-i18n="node3.p">美的 / 华凌带蓝牙的分体式空调。</p>
             </div>
           </div>
           <div class="json reveal">
@@ -819,9 +836,9 @@
       <section id="install">
         <div class="wrap">
           <div class="sec-head reveal">
-            <span class="sec-no">04 — 安装</span>
-            <h2>三步，从源码构建。</h2>
-            <p class="sec-sub">
+            <span class="sec-no" data-i18n="install.no">04 — 安装</span>
+            <h2 data-i18n="install.h2">三步，从源码构建。</h2>
+            <p class="sec-sub" data-i18n="install.sub">
               需要 macOS 14 及以上和 Xcode 命令行工具。也可以直接从
               <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a>
               下载打包好的 App，再把 <code>midea-ac-agent</code> 放到 <code>~/.local/bin</code>。
@@ -830,28 +847,28 @@
           <div class="steps">
             <div class="step reveal">
               <div>
-                <h3>获取源码</h3>
+                <h3 data-i18n="s1.h">获取源码</h3>
                 <div class="code">
                   <pre>git clone https://github.com/binaryify/MideaBar.git
 cd MideaBar</pre>
-                  <button class="copy" type="button">复制</button>
+                  <button class="copy" type="button" data-i18n="copy">复制</button>
                 </div>
               </div>
             </div>
             <div class="step reveal">
               <div>
-                <h3>打包并启动</h3>
-                <p>把后台程序的路径传给 <code>AGENT</code>，它会被放进 App 包里。</p>
+                <h3 data-i18n="s2.h">打包并启动</h3>
+                <p data-i18n="s2.p">把后台程序的路径传给 <code>AGENT</code>，它会被放进 App 包里。</p>
                 <div class="code">
                   <pre>make run AGENT=/path/to/midea-ac-agent</pre>
-                  <button class="copy" type="button">复制</button>
+                  <button class="copy" type="button" data-i18n="copy">复制</button>
                 </div>
               </div>
             </div>
             <div class="step reveal">
               <div>
-                <h3>允许蓝牙权限</h3>
-                <p>首次启动时 macOS 会请求蓝牙权限，点允许。之后把 <code>build/MideaBar.app</code> 拖进「应用程序」，通过 Finder 打开即可。</p>
+                <h3 data-i18n="s3.h">允许蓝牙权限</h3>
+                <p data-i18n="s3.p">首次启动时 macOS 会请求蓝牙权限，点允许。之后把 <code>build/MideaBar.app</code> 拖进「应用程序」，通过 Finder 打开即可。</p>
               </div>
             </div>
           </div>
@@ -859,12 +876,12 @@ cd MideaBar</pre>
       </section>
 
       <div class="wrap">
-        <div class="disclaimer reveal">
+        <div class="disclaimer reveal" data-i18n="disclaimer">
           <strong>免责声明</strong>　本项目为个人开源项目，与美的集团及其子品牌无任何关联，也未获其授权；「美的」「华凌」等名称和商标归其所有者所有。蓝牙通信协议来自对设备行为的公开研究，仅供学习与在自己的设备上使用，因使用本项目产生的一切后果由使用者自行承担。
         </div>
         <footer>
           <span>MideaBar · MIT License · © 2026 binaryify</span>
-          <span><a href="https://github.com/binaryify/MideaBar">GitHub</a>　·　<a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.md">通信协议</a></span>
+          <span data-i18n="footer.links"><a href="https://github.com/binaryify/MideaBar">GitHub</a>　·　<a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.md">通信协议</a></span>
         </footer>
       </div>
     </main>
@@ -944,6 +961,92 @@ cd MideaBar</pre>
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
+      // ---- 中英切换：中文直接写在 HTML 里，英文在 EN 里；带 data-i18n 的元素按 key 替换 innerHTML ----
+      const EN = {
+        title: "MideaBar · Your AC, in the menu bar",
+        desc: "MideaBar is an open-source macOS menu bar app that controls Midea / Hualing air conditioners directly over Bluetooth — no phone app, no cloud.",
+        "nav.demo": "Demo",
+        "nav.features": "Features",
+        "nav.how": "How it works",
+        "nav.install": "Install",
+        eyebrow: "<i></i>macOS menu bar · Direct Bluetooth · Open source",
+        h1: "Your AC,<br /><em>in the menu bar.</em>",
+        lede: "MideaBar controls Midea / Hualing air conditioners from your Mac over Bluetooth. No phone, no cloud — one click in the menu bar to power on, set the temperature or switch modes.",
+        "cta.gh": "Get it on GitHub",
+        "cta.demo": "Watch the 9-second demo ↓",
+        "demo.no": "01 — Demo",
+        "demo.h2": "Click, power on, cool down.",
+        "demo.sub": "The panel and the temperature changes are exactly what the real app shows — the temperature in the menu bar stays in sync.",
+        "features.no": "02 — Features",
+        "features.h2": "Everything you use in the phone app, right here.",
+        "f1.h": "One-click power",
+        "f1.p": "The menu bar shows the set temperature. Open the panel and the power button is in the top-right corner.",
+        "f2.h": "Precise temperature",
+        "f2.p": "16–30℃ in 0.5° steps. The command is sent only when you release the slider, so it never floods the AC.",
+        "f3.h": "Modes &amp; fan speed",
+        "f3.p": "Auto, Cool, Dry, Heat and Fan; five fan speeds, plus vertical / horizontal swing.",
+        "f4.h": "Eco &amp; Turbo",
+        "f4.p": "One switch for Eco, one tile for Turbo, with the state read back in real time.",
+        "f5.h": "Indoor &amp; outdoor",
+        "f5.p": "The top of the panel shows the indoor and outdoor temperatures read by the AC's own sensors.",
+        "f6.h": "Local only",
+        "f6.p": "Point-to-point Bluetooth. No account, no data uploaded, works offline.",
+        "how.no": "03 — How it works",
+        "how.h2": "UI and Bluetooth, kept apart.",
+        "how.sub": 'MideaBar only draws the UI. The Bluetooth connection is handled by a background program, <code>midea-ac-agent</code>, and the two talk in JSON, one message per line. Implement a backend that follows the <a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.en.md" style="color: var(--cool)">protocol</a> and you can swap it in.',
+        "node1.p": "Menu bar icon and control panel, with optimistic updates and automatic rollback on failure.",
+        "node2.p": "Handshake, encryption and reconnection, holding one long-lived Bluetooth connection.",
+        "node3.h": "Your AC",
+        "node3.p": "Midea / Hualing split air conditioners with Bluetooth.",
+        "install.no": "04 — Install",
+        "install.h2": "Build from source in three steps.",
+        "install.sub": 'Requires macOS 14+ and the Xcode Command Line Tools. You can also download the prebuilt app from <a href="https://github.com/Binaryify/MideaBar/releases" style="color: var(--cool)">Releases</a> and put <code>midea-ac-agent</code> in <code>~/.local/bin</code>.',
+        "s1.h": "Get the source",
+        "s2.h": "Build and launch",
+        "s2.p": "Pass the agent's path as <code>AGENT</code> and it gets bundled into the app.",
+        "s3.h": "Allow Bluetooth",
+        "s3.p": "On first launch macOS asks for Bluetooth permission — click Allow. Then drag <code>build/MideaBar.app</code> into Applications and open it from Finder.",
+        disclaimer: "<strong>Disclaimer</strong>&emsp;This is a personal open-source project, not affiliated with or authorized by Midea Group or its sub-brands. “Midea”, “Hualing” and related names and trademarks belong to their respective owners. The Bluetooth protocol comes from public research into device behavior and is provided for learning and for use with your own devices only; you use this project at your own risk.",
+        "footer.links": '<a href="https://github.com/binaryify/MideaBar">GitHub</a>&emsp;·&emsp;<a href="https://github.com/binaryify/MideaBar/blob/main/docs/agent-protocol.en.md">Protocol</a>',
+        copy: "Copy",
+        copied: "Copied",
+        copyFailed: "Copy failed",
+        "sound.on": "Sound on",
+        "sound.off": "Sound off",
+      };
+      // 只在脚本里用到的中文文案（HTML 里的中文在切换前读出来）
+      const ZH = { copied: "已复制", copyFailed: "复制失败", "sound.off": "关闭声音" };
+      const descMeta = document.querySelector('meta[name="description"]');
+      ZH.title = document.title;
+      ZH.desc = descMeta.content;
+      const i18nEls = document.querySelectorAll("[data-i18n]");
+      i18nEls.forEach((el) => (ZH[el.dataset.i18n] ??= el.innerHTML));
+      let lang = "zh";
+      const t = (k) => (lang === "en" ? EN : ZH)[k];
+      const langBtn = document.getElementById("lang");
+      function setLang(l) {
+        lang = l;
+        document.documentElement.lang = l === "en" ? "en" : "zh-CN";
+        i18nEls.forEach((el) => (el.innerHTML = t(el.dataset.i18n)));
+        document.title = t("title");
+        descMeta.content = t("desc");
+        langBtn.textContent = l === "en" ? "中文" : "EN";
+        updateSound();
+        try {
+          localStorage.setItem("lang", l);
+        } catch {}
+      }
+      langBtn.addEventListener("click", () => setLang(lang === "en" ? "zh" : "en"));
+      function initialLang() {
+        const q = new URLSearchParams(location.search).get("lang");
+        if (q === "en" || q === "zh") return q;
+        try {
+          const saved = localStorage.getItem("lang");
+          if (saved) return saved;
+        } catch {}
+        return navigator.language.toLowerCase().startsWith("zh") ? "zh" : "en";
+      }
+
       // ---- 演示视频声音开关 ----
       const video = document.getElementById("demo-video");
       const sound = document.getElementById("sound");
@@ -953,10 +1056,12 @@ cd MideaBar</pre>
           video.currentTime = 0;
           video.play();
         }
-        sound.querySelector("span").textContent = video.muted ? "打开声音" : "关闭声音";
-        sound.querySelector(".wave").style.opacity = video.muted ? 0.35 : 1;
+        updateSound();
       });
-      sound.querySelector(".wave").style.opacity = 0.35;
+      function updateSound() {
+        sound.querySelector("span").textContent = t(video.muted ? "sound.on" : "sound.off");
+        sound.querySelector(".wave").style.opacity = video.muted ? 0.35 : 1;
+      }
       // 滚到可见时播放，离开时暂停（部分浏览器会拦截首屏外的自动播放）
       new IntersectionObserver(([e]) => (e.isIntersecting ? video.play().catch(() => {}) : video.pause()), {
         threshold: 0.3,
@@ -967,13 +1072,15 @@ cd MideaBar</pre>
         btn.addEventListener("click", async () => {
           try {
             await navigator.clipboard.writeText(btn.previousElementSibling.textContent);
-            btn.textContent = "已复制";
+            btn.textContent = t("copied");
           } catch {
-            btn.textContent = "复制失败";
+            btn.textContent = t("copyFailed");
           }
-          setTimeout(() => (btn.textContent = "复制"), 1500);
+          setTimeout(() => (btn.textContent = t("copy")), 1500);
         })
       );
+
+      setLang(initialLang());
     </script>
   </body>
 </html>
